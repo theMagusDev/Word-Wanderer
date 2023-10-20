@@ -9,5 +9,5 @@ def get_settings():
     settings = dict()
     return settings
 
-def save_settings():
+def save_settings(settings):
     return 0
