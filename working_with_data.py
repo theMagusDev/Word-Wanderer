@@ -1,5 +1,5 @@
 def get_dictionary():
-    dictionary = dict()
+    dictionary = list()
     return dictionary
 
 def save_dictionary(dictionary):
