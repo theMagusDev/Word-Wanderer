@@ -1,13 +1,35 @@
-def get_dictionary():
-    dictionary = list()
-    return dictionary
+import json
 
-def save_dictionary(dictionary):
-    return 0
+def get_dictionary():
+    with open('data/data.json', 'rt') as data_file:
+        data = json.load(data_file)
+
+    return data
+
+
+
+def save_dictionary(data, pretty=False):
+    if pretty:
+        with open('data/data.json', 'wt') as data_file:
+            json.dump(data, data_file, allow_nan=True, indent=4)
+    else:
+        with open('data/data.json', 'wt') as data_file:
+            json.dump(data, data_file, allow_nan=True, separators=(',', ':'))
+
+
 
 def get_settings():
-    settings = dict()
-    return settings
+    with open('data/settings.json', 'rt') as data_file:
+        data = json.load(data_file)
 
-def save_settings(settings):
-    return 0
+    return data
+
+
+
+def save_settings(data, pretty=True):
+    if pretty:
+        with open('data/settings.json', 'wt') as data_file:
+            json.dump(data, data_file, allow_nan=True, indent=4)
+    else:
+        with open('data/settings.json', 'wt') as data_file:
+            json.dump(data, data_file, allow_nan=True, separators=(',', ':'))
