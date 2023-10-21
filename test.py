@@ -1,5 +1,5 @@
 from working_with_data import get_dictionary
-from main import *
+from Main import *
 from time import *
 import random
 
