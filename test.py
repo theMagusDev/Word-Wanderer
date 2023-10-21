@@ -1,5 +1,5 @@
 from working_with_data import get_dictionary
-from Main import *
+from Main import print_main_menu_info
 from time import *
 import random
 
@@ -15,44 +15,44 @@ def check_input(string):  # проверка формата слова
 
 
 def help_mode():  # работа со списком команд
-    print("Список доступных команд:\n"
-          "/help - вывод списка доступных команд\n"
-          "/home - переход в главное меню\n"
-          "/exit - выход из всей программы\n"
-          "/skip - пропуск слова, засчитывает как неверное\n"
-          "/tip - подсказка\n"
-          "/continue - чтобы продолжить тестирование")
-    next_string = input("Введите команду из списка: \n>> ")
+    print("List of available commands:\n"
+          "/help - list of available commands\n"
+          "/home - switch to the main menu\n"
+          "/exit - exit from the entire program\n"
+          "/skip - omission of a word, counts as an incorrect word\n"
+          "/tip - hint\n"
+          "/continue - to continue testing")
+    next_string = input("Enter a command from the list: \n>> ").strip()
     while next_string not in ['/help', '/home', '/exit', '/skip', '/tip', '/continue']:
-        print("Неверный формат ввода. Введите команду из списка:")
-        next_string = input('>> ')
+        print("Invalid input format. Enter a command from the list:")
+        next_string = input('>> ').strip()
     return next_string
 
 
 def work_with_dic(tek_dic):  # работа со вводом
-    cur_word = input(f"{tek_dic['meaning']} - ")
+    cur_word = input(f"{tek_dic['meaning']} - ").strip()
     while not(check_input(cur_word)):
-        print("Неверный формат ввода. Пожалуйста, вводите только символы английского алфавита")
-        cur_word = input(f"{tek_dic['meaning']} - ")
+        print("Invalid input format. Please enter English alphabet characters only.")
+        cur_word = input(f"{tek_dic['meaning']} - ").strip()
     while cur_word == '/help':
         cur_word = help_mode()
     if cur_word == '/home':
-        tmp_string = input("Вы уверены, что хотите досрочно завершить тест? Вы будете перенаправлены "
-                           "в главное меню. Введите: y - да, n - нет \n>> ")
+        tmp_string = input("Are you sure you want to complete the test early? "
+                           "You will be redirected to the main menu. Enter: y - yes, n - no \n>> ").strip()
         while not (tmp_string == 'y' or tmp_string == 'n'):
-            print("Неверный формат ввода. Введите: y - да, n - нет")
-            tmp_string = input('>> ')
+            print("Invalid input format. Enter: y - yes, n - no")
+            tmp_string = input('>> ').strip()
         if tmp_string == 'y':
             print_main_menu_info()
             return '-1'
         elif tmp_string == 'n':
             return work_with_dic(tek_dic)
     elif cur_word == '/exit':
-        tmp_string = input("Вы уверены, что хотите выйти из программы? Прогресс теста "
-                           "не сохранится. Введите: y - да, n - нет \n>> ")
+        tmp_string = input("Are you sure you want to exit the program? "
+                           "The test progress will not be saved. Enter: y - yes, n - no \n>> ").strip()
         while not (tmp_string == 'y' or tmp_string == 'n'):
-            print("Неверный формат ввода. Введите: y - да, n - нет")
-            tmp_string = input('>> ')
+            print("Invalid input format. Enter: y - yes, n - no")
+            tmp_string = input('>> ').strip()
         if tmp_string == 'y':
             exit()
         elif tmp_string == 'n':
@@ -66,18 +66,16 @@ def work_with_dic(tek_dic):  # работа со вводом
     return cur_word
 
 
-def sklonenie(n, word):  # преобразование окончания сущ при выводе времени
-    words = [word+'у', word+'ы', word]
-    if all((n % 10 == 1, n % 100 != 11)):
-        return str(n) + ' ' + str(words[0])
-    elif all((2 <= n % 10 <= 4, any((n % 100 < 10, n % 100 >= 20)))):
-        return str(n) + ' ' + str(words[1])
-    return str(n) + ' ' + str(words[2])
+def time_moment(res2, string):
+    if res2 == 1:
+        return str(res2) + ' ' + string
+    return str(res2) + ' ' + string+'s'
 
 
 def test_mode():
     dictionary = get_dictionary()["dictionary"]
-    print("Это режим теста. Вам будет дано значение на русском, необходимо напечатать его перевод на английский")
+    print("This is a test mode. You will be given a value in one language, "
+          "you need to type its translation into English")
     pos_ans = ["You got it right!", "Well done!", "That's correct!", "Good job!", "Excellent!"]
     neg_ans = ["Don't worry! You'll learn it!", "That is not correct. Keep trying!", "Wrong! Remember this one!"
                "Don't give up! You'll memorize it!"]
@@ -100,7 +98,7 @@ def test_mode():
             dictionary[elem]["rating"] -= 1
         elif cur_word == '-3':
             print('ura')
-        elif cur_word.isalpha():
+        else:
             cur_word = cur_word.lower()
             if cur_word == tek_dic['word']:
                 print(pos_ans[random.randint(0, len(pos_ans) - 1)])
@@ -113,10 +111,10 @@ def test_mode():
     res2 = int(strftime("%H", cur_time)) * 3600 + int(strftime("%M", cur_time)) * 60 +\
            int(strftime("%S", cur_time)) - res1
     if res2 < 60:
-        print(f"Хорошая работа! Тест завершен! Вы потратили на его выполнение {sklonenie(res2, 'секунд')}.")
+        print(f"Good job! The test is complete! You spent {time_moment(res2, 'second')}.")
     else:
-        print(f"Хорошая работа! Тест завершен! Вы потратили на его выполнение {sklonenie(res2//60, 'минут')}"
-              f" и {sklonenie(res2%60, 'секунд')}.")
+        print(f"Good job! The test is complete! You spent {time_moment(res2//60, 'minute')}"
+              f" and {time_moment(res2%60, 'second')}.")
     return 0
 
 
