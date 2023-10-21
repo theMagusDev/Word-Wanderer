@@ -76,7 +76,7 @@ def sklonenie(n, word):  # преобразование окончания су�
 
 
 def test_mode():
-    dictionary = get_dictionary()
+    dictionary = get_dictionary()["dictionary"]
     print("Это режим теста. Вам будет дано значение на русском, необходимо напечатать его перевод на английский")
     pos_ans = ["You got it right!", "Well done!", "That's correct!", "Good job!", "Excellent!"]
     neg_ans = ["Don't worry! You'll learn it!", "That is not correct. Keep trying!", "Wrong! Remember this one!"
