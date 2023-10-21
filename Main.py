@@ -1,8 +1,16 @@
-import sys
+import sys, os
 from word_add import *
 from test import *
 from settings import *
 from words_show import *
+
+# создание папки с данными
+try: 
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(parent_dir, 'data')
+    os.mkdir(path)
+except OSError:
+    pass
 
 # функции main программы
 def print_main_menu_info():
