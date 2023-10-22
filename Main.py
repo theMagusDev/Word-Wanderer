@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, shutil
 from word_add import *
 from test import *
 from settings import *
@@ -11,6 +11,20 @@ try:
     os.mkdir(path)
 except OSError:
     pass
+
+# инициализация дефолтных данных
+data_exists = os.path.exists('data/data.json')
+settings_exists = os.path.exists('data/settings.json')
+if not data_exists:
+    shutil.copy2('defaults/data.json', 'data')
+
+if not settings_exists:
+    shutil.copy2('defaults/settings.json', 'data')
+
+#
+def set_defaults():
+    shutil.copy2('defaults/data.json', 'data')
+    shutil.copy2('defaults/settings.json', 'data')
 
 # функции main программы
 def print_main_menu_info():
