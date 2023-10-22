@@ -157,6 +157,7 @@ def test_mode():
             return 0
         elif cur_word == '-2':
             count_ob += 1
+            bonus_score = 0
             print(not_know_ans[random.randint(0, len(not_know_ans) - 1)])
             print(f"The right answer: {tek_dic['meaning']} - {tek_dic['word']}")
             dictionary[elem]["rating"] -= 1
