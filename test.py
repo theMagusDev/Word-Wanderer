@@ -1,5 +1,4 @@
-from working_with_data import get_dictionary
-from Main import print_main_menu_info
+from working_with_data import *
 from time import *
 import random
 
@@ -43,7 +42,6 @@ def work_with_dic(tek_dic):  # работа со вводом
             print("Invalid input format. Enter: y - yes, n - no")
             tmp_string = input('>> ').strip()
         if tmp_string == 'y':
-            print_main_menu_info()
             return '-1'
         elif tmp_string == 'n':
             return work_with_dic(tek_dic)
@@ -72,8 +70,57 @@ def time_moment(res2, string):
     return str(res2) + ' ' + string+'s'
 
 
+def int_r(num):
+    num = int(num + (0.5 if num > 0 else -0.5))
+    return num
+
+
+def hint(tek_dic, num):
+    ans = tek_dic["word"]
+    len_word = len(ans)
+    if num == 1:
+        if len_word <= 5:
+            print(f"{tek_dic['meaning']} - {ans[:1]}")
+        else:
+            print(f"{tek_dic['meaning']} - {ans[:int_r(len_word*0.25)]}")
+    else:
+        if len_word <= 5:
+            print(f"{tek_dic['meaning']} - {ans[:2]}")
+        else:
+            print(f"{tek_dic['meaning']} - {ans[:int_r(len_word*0.25)*2]}")
+
+
+def word_with_answers(cur_word, tek_dic):
+    len_word = len(tek_dic["word"])
+    ctip = 0
+    while ctip <= 2:
+        if cur_word == "-3" and ctip != 2:
+            if len_word == 1:
+                return "sc-1"
+            elif len_word == 2 and ctip == 1:
+                return "sc-2"
+            ctip += 1
+            hint(tek_dic, ctip)
+        else:
+            cur_word = cur_word.lower()
+            if cur_word == tek_dic['word']:
+                if ctip == 0:
+                    return "sc2"
+                elif ctip == 1:
+                    return "sc1"
+                else:
+                    return "sc0"
+            else:
+                return "sc-1"
+        cur_word = work_with_dic(tek_dic)
+    return "sc-1"
+
+
 def test_mode():
     dictionary = get_dictionary()["dictionary"]
+    if len(dictionary) == 0:
+        print("Oups! The dictionary is empty! Nothing to check! Add new words and let's get started! ")
+        return 0
     print("This is a test mode. You will be given a value in one language, "
           "you need to type its translation into English")
     pos_ans = ["You got it right!", "Well done!", "That's correct!", "Good job!", "Excellent!"]
@@ -82,6 +129,7 @@ def test_mode():
     not_know_ans = ["Keep in mind this word!", "Learn this one!", "Look at this translation and remember it!"]
     random.shuffle(dictionary)
     dictionary = sorted(dictionary, key=lambda x: x["rating"])
+    count = 0
     print("Loading your amazing words...")
     # для подсчета времени
     cur_time = gmtime()
@@ -96,26 +144,30 @@ def test_mode():
             print(not_know_ans[random.randint(0, len(not_know_ans) - 1)])
             print(f"The right answer: {tek_dic['meaning']} - {tek_dic['word']}")
             dictionary[elem]["rating"] -= 1
-        elif cur_word == '-3':
-            print('ura')
         else:
-            cur_word = cur_word.lower()
-            if cur_word == tek_dic['word']:
+            ans = word_with_answers(cur_word, tek_dic)
+            if ans == "sc2":  # if structure because of status
+                count += 1
+                print(pos_ans[random.randint(0, len(pos_ans) - 1)])
+                dictionary[elem]["rating"] += 2
+            elif ans == "sc1":
+                count += 1
                 print(pos_ans[random.randint(0, len(pos_ans) - 1)])
                 dictionary[elem]["rating"] += 1
+            elif ans == "sc0":
+                count += 1
+                print(pos_ans[random.randint(0, len(pos_ans) - 1)])
             else:
                 print(neg_ans[random.randint(0, len(neg_ans) - 1)])
                 print(f"The right answer: {tek_dic['meaning']} - {tek_dic['word']}")
                 dictionary[elem]["rating"] -= 1
     cur_time = gmtime()
     res2 = int(strftime("%H", cur_time)) * 3600 + int(strftime("%M", cur_time)) * 60 +\
-           int(strftime("%S", cur_time)) - res1
+        int(strftime("%S", cur_time)) - res1
     if res2 < 60:
-        print(f"Good job! The test is complete! You spent {time_moment(res2, 'second')}.")
+        print(f"Good job! The test is complete! You score is {count}/{len(dictionary)}! "
+              f"You spent {time_moment(res2, 'second')}.")
     else:
-        print(f"Good job! The test is complete! You spent {time_moment(res2//60, 'minute')}"
-              f" and {time_moment(res2%60, 'second')}.")
+        print(f"Good job! The test is complete! You score is {count}/{len(dictionary)}! "
+              f"You spent {time_moment(res2//60, 'minute')} and {time_moment(res2%60, 'second')}.")
     return 0
-
-
-test_mode()
