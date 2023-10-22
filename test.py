@@ -122,14 +122,15 @@ def test_mode():
         print("Oups! The dictionary is empty! Nothing to check! Add new words and let's get started! ")
         return 0
     print("This is a test mode. You will be given a value in one language, "
-          "you need to type its translation into English")
+          "you need to type its translation into English. If you want to close test_mode "
+          "enter: /home")
     pos_ans = ["You got it right!", "Well done!", "That's correct!", "Good job!", "Excellent!"]
     neg_ans = ["Don't worry! You'll learn it!", "That is not correct. Keep trying!", "Wrong! Remember this one!"
                "Don't give up! You'll memorize it!"]
     not_know_ans = ["Keep in mind this word!", "Learn this one!", "Look at this translation and remember it!"]
     random.shuffle(dictionary)
     dictionary = sorted(dictionary, key=lambda x: x["rating"])
-    count = 0
+    count, count_ob, res_for_score = 0, 0, 0
     print("Loading your amazing words...")
     # для подсчета времени
     cur_time = gmtime()
@@ -139,8 +140,22 @@ def test_mode():
         tek_dic = dictionary[elem]  # обращение к словарю
         cur_word = work_with_dic(tek_dic)
         if cur_word == '-1':
+            cur_time = gmtime()
+            res2 = int(strftime("%H", cur_time)) * 3600 + int(strftime("%M", cur_time)) * 60 + \
+                int(strftime("%S", cur_time))-res1
+            if res2 < 60:
+                print(f"Good job! The test is complete! You score is {count}/{count_ob}! "
+                      f"You spent {time_moment(res2, 'second')}.")
+            else:
+                print(f"Good job! The test is complete! You score is {count}/{count_ob}! "
+                      f"You spent {time_moment(res2 // 60, 'minute')} and {time_moment(res2 % 60, 'second')}.")
+            save_dictionary(dictionary)
+            prev_score = get_user_data()
+            prev_score["score"] += res_for_score
+            set_user_data(prev_score)
             return 0
         elif cur_word == '-2':
+            count_ob += 1
             print(not_know_ans[random.randint(0, len(not_know_ans) - 1)])
             print(f"The right answer: {tek_dic['meaning']} - {tek_dic['word']}")
             dictionary[elem]["rating"] -= 1
@@ -148,16 +163,23 @@ def test_mode():
             ans = word_with_answers(cur_word, tek_dic)
             if ans == "sc2":  # if structure because of status
                 count += 1
+                count_ob += 1
                 print(pos_ans[random.randint(0, len(pos_ans) - 1)])
+                res_for_score += 2
                 dictionary[elem]["rating"] += 2
             elif ans == "sc1":
                 count += 1
+                count_ob += 1
+                res_for_score += 1
                 print(pos_ans[random.randint(0, len(pos_ans) - 1)])
                 dictionary[elem]["rating"] += 1
             elif ans == "sc0":
                 count += 1
+                count_ob += 1
+                res_for_score += 1
                 print(pos_ans[random.randint(0, len(pos_ans) - 1)])
             else:
+                count_ob += 1
                 print(neg_ans[random.randint(0, len(neg_ans) - 1)])
                 print(f"The right answer: {tek_dic['meaning']} - {tek_dic['word']}")
                 dictionary[elem]["rating"] -= 1
@@ -170,4 +192,8 @@ def test_mode():
     else:
         print(f"Good job! The test is complete! You score is {count}/{len(dictionary)}! "
               f"You spent {time_moment(res2//60, 'minute')} and {time_moment(res2%60, 'second')}.")
+    save_dictionary(dictionary)
+    prev_score = get_user_data()
+    prev_score["score"] += res_for_score
+    set_user_data(prev_score)
     return 0
