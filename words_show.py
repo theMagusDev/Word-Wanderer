@@ -1,27 +1,32 @@
-from working_with_data import get_dictionary
+from working_with_data import get_user_data
+from working_with_data import get_settings
 
 def show_words():
-    dictionary = {"dictionary": get_dictionary()["dictionary"]}
-    dictionaryList = dictionary["dictionary"]
-    print(dictionaryList)
+    dictionaryList = get_user_data()["dictionary"]
+    user_settings = get_settings()
     i = 0
     user_input_in_show_mode = ""
 
-    if len(dictionaryList) < 10:
+    if len(dictionaryList) == 0: # проверка на пустоту словаря
+        print("Nothing to show yet. Add some words to see them.")
+        return
+    
+    if len(dictionaryList) < user_settings["show_words_per_time"]:
         for j in range(len(dictionaryList)):
             print(dictionaryList[j]["word"], dictionaryList[j]["meaning"])
+        print("You've printed the last words, your dictionary is over!")
+        return # printed first and actually last words
     while user_input_in_show_mode.lower() != "/home":
-        if i + 10 < len(dictionaryList):
-            print("Printing next 10 words. Enter '/home' to exit this mode.")
+        if i + user_settings["show_words_per_time"] < len(dictionaryList):
+            print("Printing next words. Enter '/home' to exit this mode.")
             for j in range(i, i + 10):
                 print(dictionaryList[j]["word"], dictionaryList[j]["meaning"])
             i += 10
             print("Enter anything to continue printing or '/home' to to get to the main menu:")
             user_input_in_show_mode = input()
         else:
-            print("Printing last words. Enter '/home' to exit this mode.")
+            print("Printing the last words.")
             for j in range(i, len(dictionaryList)):
                 print(dictionaryList[j]["word"], dictionaryList[j]["meaning"])
-            return
-
-    return
+            print("You've printed the last words, your dictionary is over!")
+            return # printed last words

@@ -1,5 +1,5 @@
-from working_with_data import get_dictionary
-from working_with_data import save_dictionary
+from working_with_data import get_user_data
+from working_with_data import set_user_data
 
 def word_add_mode():
     def check(word, english):
@@ -14,7 +14,7 @@ def word_add_mode():
                     return False
             return True
 
-    dictionary_data = {"dictionary": get_dictionary()["dictionary"]}
+    user_data = get_user_data()
     print('At this point, you can make your own word lists\n'
             'If you want to get back to the main menu,\n'
             'write "/home" in the "Enter a word in English:" field.\n')
@@ -37,8 +37,8 @@ def word_add_mode():
         print(f'You typed the word: "{word}" and its meaning "{translation}" right? If yes, write "y", if no, write "n"')
 
         if input().strip().lower() == 'y':
-            dictionary_data["dictionary"].append({"word": word.lower(), "meaning": translation, "rating": 0})
-            save_dictionary(dictionary_data)
+            user_data["dictionary"].append({"word": word.lower(), "meaning": translation, "rating": 0})
+            set_user_data(user_data)
             print('Your word has been successfully added!')
         else:
             print('Your word has not been added ;(\nEnter again')

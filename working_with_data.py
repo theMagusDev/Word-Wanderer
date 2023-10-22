@@ -1,6 +1,6 @@
 import json
 
-def get_dictionary():
+def get_user_data():
     with open('data/data.json', 'rt') as data_file:
         data = json.load(data_file)
 
@@ -8,7 +8,7 @@ def get_dictionary():
 
 
 
-def save_dictionary(data, pretty=False):
+def set_user_data(data, pretty=False):
     if pretty:
         with open('data/data.json', 'wt') as data_file:
             json.dump(data, data_file, allow_nan=True, indent=4)
