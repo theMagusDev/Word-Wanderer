@@ -117,7 +117,7 @@ def word_with_answers(cur_word, tek_dic):
 
 
 def test_mode():
-    dictionary = get_dictionary()["dictionary"]
+    dictionary = get_user_data()["dictionary"]
     if len(dictionary) == 0:
         print("Oups! The dictionary is empty! Nothing to check! Add new words and let's get started! ")
         return 0
@@ -149,10 +149,10 @@ def test_mode():
             else:
                 print(f"Good job! The test is complete! You score is {count}/{count_ob}! "
                       f"You spent {time_moment(res2 // 60, 'minute')} and {time_moment(res2 % 60, 'second')}.")
-            save_dictionary({"dictionary": dictionary})
-            prev_score = get_user_data()
-            prev_score["score"] += res_for_score
-            set_user_data({"score": prev_score})
+            new_data = get_user_data()
+            new_data["score"] += res_for_score
+            new_data["dictionary"] = dictionary
+            set_user_data(new_data)
             return 0
         elif cur_word == '-2':
             count_ob += 1
@@ -192,8 +192,8 @@ def test_mode():
     else:
         print(f"Good job! The test is complete! You score is {count}/{len(dictionary)}! "
               f"You spent {time_moment(res2//60, 'minute')} and {time_moment(res2%60, 'second')}.")
-    save_dictionary({"dictionary": dictionary})
-    prev_score = get_user_data()
-    prev_score["score"] += res_for_score
-    set_user_data({"score": prev_score})
+    new_data = get_user_data()
+    new_data["score"] += res_for_score
+    new_data["dictionary"] = dictionary
+    set_user_data(new_data)
     return 0
