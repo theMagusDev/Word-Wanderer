@@ -29,9 +29,8 @@ def work_with_item():  # работа со вводом
 
 
 def delete_words():
-    dictionary = get_dictionary()["dictionary"]
+    dictionary = get_user_data()["dictionary"]
     new_dictionary = dictionary
-    print(dictionary)
     if len(dictionary) == 0:
         print("Oups! The dictionary is empty! Nothing to delete!")
         return 0
@@ -66,7 +65,6 @@ def delete_words():
         dictionary = new_dictionary
         item = work_with_item()
     dictionary = new_dictionary
-    print(dictionary)
     print("All changes are saved in the dictionary! Redirect to the main menu...")
     new_data = get_user_data()
     new_data["dictionary"] = dictionary
