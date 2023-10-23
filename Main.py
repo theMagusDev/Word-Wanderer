@@ -3,6 +3,7 @@ from word_add import *
 from test import *
 from settings import *
 from words_show import *
+from words_delete import *
 
 # создание папки с данными
 try: 
@@ -33,13 +34,14 @@ def print_main_menu_info():
     print("2 для перехода в режим тестирования; ")
     print("3 для перехода в настройки; ")
     print("4 для вывода слов; ")
+    print("5 для перехода в режим удаления слов; ")
     print("/exit для завершения работы программы. ")
 
 print("*** Language learning ***") 
 print_main_menu_info()
 user_input = input() 
 while user_input != "/exit":
-    while user_input not in "1234" and user_input != "/exit":
+    while user_input not in "12345" and user_input != "/exit":
         print("Ошибка: введите корректную команду")
         user_input = input()
     if user_input == "/exit":
@@ -52,6 +54,8 @@ while user_input != "/exit":
         settings_setup_mode()
     elif user_input == "4":
         show_words()
+    elif user_input == "5":
+        delete_words()
     else:
         sys.exit("Incorrect input exception")
     print_main_menu_info()
