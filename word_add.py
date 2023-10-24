@@ -19,7 +19,7 @@ def word_add_mode():
         while check(word) == False:
             if word == '/home':
                 return
-            print("Incorrect word entered, please enter the correct word:")
+            print("Incorrect word or command entered, please enter again:")
             word = input().strip()
         print("Enter a translation of this word:")
 
