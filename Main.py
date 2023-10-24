@@ -4,6 +4,7 @@ from test import *
 from settings import *
 from words_show import *
 from words_delete import *
+from working_with_data import get_user_data
 
 # создание папки с данными
 try: 
@@ -28,8 +29,23 @@ def set_defaults():
     shutil.copy2('defaults/settings.json', 'data')
 
 # функции main программы
+def get_user_status(score):
+    if score < 50:
+        return "Starter"
+    elif score < 150:
+        return "Glottologist"
+    elif score < 500:
+        return "Polyglot"
+    elif score < 1500:
+        return "Philologist"
+    else:
+        return "Word-nerd"
+    
+
 def print_main_menu_info():
-    print("Вы в главном меню. Введите:")
+    user_data = get_user_data()
+    print("Вы в главном меню. Ваш статус:", get_user_status(user_data["score"]))
+    print("Введите:")
     print("1 для перехода в режим добавления слова; ")
     print("2 для перехода в режим тестирования; ")
     print("3 для перехода в настройки; ")
