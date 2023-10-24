@@ -19,9 +19,9 @@ def show_words():
     while user_input_in_show_mode.lower() != "/home":
         if i + user_settings["show_words_per_time"] < len(dictionaryList):
             print("Printing next words. Enter '/home' to exit this mode.")
-            for j in range(i, i + 10):
+            for j in range(i, i + user_settings["show_words_per_time"]):
                 print(dictionaryList[j]["word"], dictionaryList[j]["meaning"])
-            i += 10
+            i += user_settings["show_words_per_time"]
             print("Enter anything to continue printing or '/home' to to get to the main menu:")
             user_input_in_show_mode = input()
         else:
