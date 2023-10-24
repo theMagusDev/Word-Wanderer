@@ -63,9 +63,9 @@ def delete_words():
                         new_data = get_user_data()
                         new_data["dictionary"] = dictionary
                         set_user_data(new_data)
-                        return '-2'
+                        return 0
                     elif save_dict_or_not_input == 'n':
-                        return '-2'
+                        return 0
                 if tmp_phrase == '/delword':
                     tmp_string = input("Are you sure you want to delete this word? "
                                        "The deletion cannot be undone. Enter: y - yes, n - no \n>> ").strip()
