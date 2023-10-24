@@ -28,17 +28,19 @@ def settings_setup_mode():
         while user_input_in_settings_mode not in ["/edit", "/setDefault", "/home"]:
             print("Incorrect input. Enter one of the command below:")
             print_settings_commands()
+            user_input_in_settings_mode = input()
         if user_input_in_settings_mode == "/edit":
 
             # edit mode
             print("Enter the setting index (1 or 2) you want to edit or '/cancel' to cancel editing:")
             setting_number_to_change = input()
-            while setting_number_to_change not in ["1", "2", "/cancel"]:
+            while setting_number_to_change not in ["1", "2", "/cancel", "/home"]:
                 print("Incorrect setting index or command!")
                 print("Enter the setting index (1 or 2) you want to edit or '/cancel' to cancel editing:")
                 setting_number_to_change = input()
             
             if setting_number_to_change == "/cancel":
+                print("Changes were cancelled.")
                 continue
             elif setting_number_to_change == "1":
                 print("Enter a new dictionary capacity:")
@@ -49,6 +51,7 @@ def settings_setup_mode():
                     new_dictionary_capacity = input()
                 user_settings["dictionary_capacity"] = int(new_dictionary_capacity)
                 save_settings(user_settings)
+                print("Saved your new settings. ")
             elif setting_number_to_change == "2":
                 print("Enter a new amount of words to show in learning mode per time:")
                 new_show_words_per_time = input()
@@ -58,8 +61,10 @@ def settings_setup_mode():
                     new_show_words_per_time = input()
                 user_settings["show_words_per_time"] = int(new_show_words_per_time)
                 save_settings(user_settings)
+                print("Saved your new settings. ")
             else:
                 quit("Incorrect input exception")
+            
                 
         elif user_input_in_settings_mode == "/setDefault":
 
@@ -67,6 +72,7 @@ def settings_setup_mode():
             user_settings["dictionary_capacity"] = 100000
             user_settings["show_words_per_time"] = 10
             save_settings(user_settings)
+            print("Your settings have been reset to default.")
         elif user_input_in_settings_mode == "/home":
 
             # return to home

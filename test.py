@@ -130,7 +130,8 @@ def test_mode():
     not_know_ans = ["Keep in mind this word!", "Learn this one!", "Look at this translation and remember it!"]
     random.shuffle(dictionary)
     dictionary = sorted(dictionary, key=lambda x: x["rating"])
-    count, count_ob, res_for_score = 0, 0, 0
+    count, count_ob = 0, 0
+    res_for_score, bonus_score = 0, 0
     print("Loading your amazing words...")
     # для подсчета времени
     cur_time = gmtime()
@@ -156,30 +157,35 @@ def test_mode():
             return 0
         elif cur_word == '-2':
             count_ob += 1
+            bonus_score = 0
             print(not_know_ans[random.randint(0, len(not_know_ans) - 1)])
             print(f"The right answer: {tek_dic['meaning']} - {tek_dic['word']}")
             dictionary[elem]["rating"] -= 1
         else:
             ans = word_with_answers(cur_word, tek_dic)
-            if ans == "sc2":  # if structure because of status
+            if ans == "sc2":  # without tips
                 count += 1
                 count_ob += 1
                 print(pos_ans[random.randint(0, len(pos_ans) - 1)])
-                res_for_score += 2
+                bonus_score += 1
+                res_for_score += bonus_score
                 dictionary[elem]["rating"] += 2
-            elif ans == "sc1":
+            elif ans == "sc1":  # one tip
                 count += 1
                 count_ob += 1
+                bonus_score = 0
                 res_for_score += 1
                 print(pos_ans[random.randint(0, len(pos_ans) - 1)])
                 dictionary[elem]["rating"] += 1
-            elif ans == "sc0":
+            elif ans == "sc0":  # two tips
                 count += 1
                 count_ob += 1
+                bonus_score = 0
                 res_for_score += 1
                 print(pos_ans[random.randint(0, len(pos_ans) - 1)])
             else:
                 count_ob += 1
+                bonus_score = 0
                 print(neg_ans[random.randint(0, len(neg_ans) - 1)])
                 print(f"The right answer: {tek_dic['meaning']} - {tek_dic['word']}")
                 dictionary[elem]["rating"] -= 1
