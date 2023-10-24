@@ -10,11 +10,13 @@ def print_settings_commands():
     print("Enter '/edit' to edit some setting;")
     print("Enter '/setDefault' to reset your settings to default;")
     print("Enter '/home' to return to the main menu.")
+    print("Enter '/exit' to exit the app.")
+
 
 def settings_setup_mode():
     user_input_in_settings_mode = ""
     
-    while user_input_in_settings_mode != "/home":
+    while user_input_in_settings_mode != "/home" or user_input_in_settings_mode != "/exit":
         
         # получаем настройки пользователя
         user_settings = get_settings()
@@ -25,7 +27,7 @@ def settings_setup_mode():
 
         # пользователь вводит, что он хочет
         user_input_in_settings_mode = input()
-        while user_input_in_settings_mode not in ["/edit", "/setDefault", "/home"]:
+        while user_input_in_settings_mode not in ["/edit", "/setDefault", "/home", "/exit"]:
             print("Incorrect input. Enter one of the command below:")
             print_settings_commands()
             user_input_in_settings_mode = input()
@@ -34,7 +36,7 @@ def settings_setup_mode():
             # edit mode
             print("Enter the setting index (1 or 2) you want to edit or '/cancel' to cancel editing:")
             setting_number_to_change = input()
-            while setting_number_to_change not in ["1", "2", "/cancel", "/home"]:
+            while setting_number_to_change not in ["1", "2", "/cancel", "/home", "/exit"]:
                 print("Incorrect setting index or command!")
                 print("Enter the setting index (1 or 2) you want to edit or '/cancel' to cancel editing:")
                 setting_number_to_change = input()
@@ -77,5 +79,10 @@ def settings_setup_mode():
 
             # return to home
             return
+        elif user_input_in_settings_mode == '/exit':
+            exit()
         else:
             quit("Incorrect input exception")
+    
+    if user_input_in_settings_mode == '/exit':
+        exit()
