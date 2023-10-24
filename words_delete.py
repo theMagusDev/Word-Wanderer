@@ -44,7 +44,8 @@ def delete_words():
         for i in dictionary:
             if item in i["word"]:
                 translation = i["meaning"]
-                tmp_phrase = input(f"Found the word '{item}' with the translation '{translation}'. "
+                found_word = i["word"]
+                tmp_phrase = input(f"Found the word '{found_word}' with the translation '{translation}'. "
                                    f"Do you want to delete it or continue searching?\n"
                                    f"Enter: '/delword' for deleting or '/cont' to continue searching "
                                    f"without deletion this word \n>> ").strip()
@@ -52,7 +53,7 @@ def delete_words():
                     print("Invalid input format. Enter: /delword - for deleting, /cont - to continue searching")
                     tmp_phrase = input('>> ').strip()
                 if tmp_phrase == '/home':
-                    save_dict_or_not_input = input("ou will be redirected to the main menu. "
+                    save_dict_or_not_input = input("You will be redirected to the main menu. "
                            "Do you want to save your changes? Enter: y - yes, n - no \n>> ").strip()
                     while not (save_dict_or_not_input == 'y' or save_dict_or_not_input == 'n'):
                         print("Invalid input format. Enter: y - yes, n - no")
