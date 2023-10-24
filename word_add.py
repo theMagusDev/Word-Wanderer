@@ -11,9 +11,8 @@ def check(word):
         
 def word_add_mode():
     user_data = get_user_data()
-    print('At this point, you can make your own word lists\n'
-            'If you want to get back to the main menu,\n'
-            'write "/home" in the "Enter a word in English:" field.\n')
+    print('At this point, you can make your own word list. \n'
+            'If you want to get back to the main menu, write "/home"')
     while True:
         print('Enter a new foreign word or "/home" to get back to the main menu:')
         word = input().strip()
@@ -22,8 +21,6 @@ def word_add_mode():
                 return
             print("Incorrect word entered, please enter the correct word:")
             word = input().strip()
-            if word == '/back':
-                exit()
         print("Enter a translation of this word:")
 
         translation = input().strip()
@@ -32,15 +29,18 @@ def word_add_mode():
                 return
             print("Incorrect word entered, please enter the correct word:")
             translation = input().strip()
+            
         print(f'You typed the word: "{word}" and its meaning "{translation}" right? If yes, write "y", if no, write "n"')
         command_to_save = input().strip().lower()
         while command_to_save not in ['y', 'n']:
-            print('Incorrect answer! Write "y" for yes or "n" for no:')
+            if command_to_save == '/home':
+                return
+            print('Incorrect answer or command! Write "y" for yes or "n" for no and "/home" to get back to the main menu:')
             command_to_save = input().strip().lower()
         if command_to_save == 'y':
             user_data["dictionary"].append({"word": word.lower(), "meaning": translation, "rating": 0})
             set_user_data(user_data)
             print('Your word has been successfully added!')
         else:
-            print('Your word has not been added ;(\nEnter again')
+            print('Ok, this word has not been added. ')
             continue
