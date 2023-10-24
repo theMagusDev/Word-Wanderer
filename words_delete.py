@@ -11,10 +11,10 @@ def check_input_for_delete(string):  # проверка формата слов�
 
 
 def work_with_item():  # работа со вводом
-    cur_word = input("Enter word if you want to delete it or '/home' to close delete mode: ").strip()
+    cur_word = input("Enter word or its part if you want to delete it or '/home' to close delete mode: ").strip()
     while not(check_input_for_delete(cur_word)):
         print("Invalid input format. Please enter English alphabet characters only.")
-        cur_word = input("Enter the word in English that you want to delete: ").strip()
+        cur_word = input("Enter the word you want to delete (or some part of that word): ").strip()
     if cur_word == '/home':
         tmp_string = input("Are you sure you want to exit from delete_mode? "
                            "You will be redirected to the main menu. Enter: y - yes, n - no \n>> ").strip()
@@ -25,7 +25,7 @@ def work_with_item():  # работа со вводом
             return '-1'
         elif tmp_string == 'n':
             return work_with_item()
-    return cur_word
+    return cur_word.lower()
 
 
 def delete_words():
@@ -48,9 +48,23 @@ def delete_words():
                                    f"Do you want to delete it or continue searching?\n"
                                    f"Enter: '/delword' for deleting or '/cont' to continue searching "
                                    f"without deletion this word \n>> ").strip()
-                while not (tmp_phrase == '/delword' or tmp_phrase == '/cont'):
+                while not (tmp_phrase == '/delword' or tmp_phrase == '/cont' or tmp_phrase == '/home'):
                     print("Invalid input format. Enter: /delword - for deleting, /cont - to continue searching")
                     tmp_phrase = input('>> ').strip()
+                if tmp_phrase == '/home':
+                    save_dict_or_not_input = input("ou will be redirected to the main menu. "
+                           "Do you want to save your changes? Enter: y - yes, n - no \n>> ").strip()
+                    while not (save_dict_or_not_input == 'y' or save_dict_or_not_input == 'n'):
+                        print("Invalid input format. Enter: y - yes, n - no")
+                        save_dict_or_not_input = input('>> ').strip()
+                    if save_dict_or_not_input == 'y':
+                        dictionary = new_dictionary
+                        new_data = get_user_data()
+                        new_data["dictionary"] = dictionary
+                        set_user_data(new_data)
+                        return '-2'
+                    elif save_dict_or_not_input == 'n':
+                        return '-2'
                 if tmp_phrase == '/delword':
                     tmp_string = input("Are you sure you want to delete this word? "
                                        "The deletion cannot be undone. Enter: y - yes, n - no \n>> ").strip()
