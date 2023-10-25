@@ -23,6 +23,7 @@ if not data_exists:
 if not settings_exists:
     shutil.copy2('defaults/settings.json', 'data')
 
+
 def set_defaults():
     shutil.copy2('defaults/data.json', 'data')
     shutil.copy2('defaults/settings.json', 'data')
