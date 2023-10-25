@@ -33,9 +33,7 @@ def word_add_mode():
         print(f'You typed the word: "{word}" and its meaning "{translation}" right? If yes, write "y", if no, write "n"')
         command_to_save = input().strip().lower()
         while command_to_save not in ['y', 'n']:
-            if command_to_save == '/home':
-                return
-            print('Incorrect answer or command! Write "y" for yes or "n" for no and "/home" to get back to the main menu:')
+            print('Incorrect answer or command! Write "y" for yes or "n" for no:')
             command_to_save = input().strip().lower()
         if command_to_save == 'y':
             user_data["dictionary"].append({"word": word.lower(), "meaning": translation, "rating": 0})
