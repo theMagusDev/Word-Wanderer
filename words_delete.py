@@ -2,7 +2,7 @@ from working_with_data import *
 
 
 def check_input_for_delete(string):  # проверка формата слова
-    if string == '/home':
+    if string in ['/home', '/exit']:
         return True
     for char in range(len(string)):
         if not(string[char].isalpha()) and string[char] != '-' and string[char] != ' ':
@@ -22,7 +22,19 @@ def work_with_item():  # работа со вводом
             print("Invalid input format. Enter: y - yes, n - no")
             tmp_string = input('>> ').strip()
         if tmp_string == 'y':
+            if cur_word == '/exit':
+                return '-2'
             return '-1'
+        elif tmp_string == 'n':
+            return work_with_item()
+    elif cur_word == '/exit':
+        tmp_string = input("Are you sure you want to exit from program? "
+                           "Enter: y - yes, n - no \n>> ").strip()
+        while not (tmp_string == 'y' or tmp_string == 'n'):
+            print("Invalid input format. Enter: y - yes, n - no")
+            tmp_string = input('>> ').strip()
+        if tmp_string == 'y':
+            return '-2'
         elif tmp_string == 'n':
             return work_with_item()
     return cur_word.lower()
@@ -37,7 +49,7 @@ def delete_words():
     print("You are now in delete mode. Type a word you would like to delete. If you want to close delete mode "
           "enter: /home")
     item = work_with_item()
-    while item != "-1":
+    while item not in ["-1", "-2"]:
         while not(any(item in i["word"] for i in dictionary)):
             print("Unfortunately, there is no such word in the dictionary! Try again! ")
             item = work_with_item()
@@ -49,12 +61,16 @@ def delete_words():
                                    f"Do you want to delete it or continue searching?\n"
                                    f"Enter: '/delword' for deleting or '/cont' to continue searching "
                                    f"without deletion this word \n>> ").strip()
-                while not (tmp_phrase == '/delword' or tmp_phrase == '/cont' or tmp_phrase == '/home'):
+                while not (tmp_phrase in ['/delword', '/cont', '/home', '/exit']):
                     print("Invalid input format. Enter: /delword - for deleting, /cont - to continue searching")
                     tmp_phrase = input('>> ').strip()
-                if tmp_phrase == '/home':
-                    save_dict_or_not_input = input("You will be redirected to the main menu. "
-                           "Do you want to save your changes? Enter: y - yes, n - no \n>> ").strip()
+                if tmp_phrase in ['/home', '/exit']:
+                    warning_phrase = ''
+                    if tmp_phrase == '/exit':
+                        warning_phrase = 'You are going to exit the program. Do you want to save your changes? Enter: y - yes, n - no \n>> ' 
+                    elif tmp_phrase == '/home':
+                        warning_phrase = 'You will be redirected to the main menu. Do you want to save your changes? Enter: y - yes, n - no \n>> '
+                    save_dict_or_not_input = input(warning_phrase).strip()
                     while not (save_dict_or_not_input == 'y' or save_dict_or_not_input == 'n'):
                         print("Invalid input format. Enter: y - yes, n - no")
                         save_dict_or_not_input = input('>> ').strip()
@@ -63,8 +79,13 @@ def delete_words():
                         new_data = get_user_data()
                         new_data["dictionary"] = dictionary
                         set_user_data(new_data)
+
+                        if tmp_phrase == '/exit':
+                            exit()
                         return 0
                     elif save_dict_or_not_input == 'n':
+                        if tmp_phrase == '/exit':
+                            exit()
                         return 0
                 if tmp_phrase == '/delword':
                     tmp_string = input("Are you sure you want to delete this word? "
@@ -80,8 +101,11 @@ def delete_words():
         dictionary = new_dictionary
         item = work_with_item()
     dictionary = new_dictionary
-    print("All changes are saved in the dictionary! Redirect to the main menu...")
     new_data = get_user_data()
     new_data["dictionary"] = dictionary
     set_user_data(new_data)
+    if item == '-2':
+        print("All changes are saved in the dictionary! Exit...")
+        exit()
+    print("All changes are saved in the dictionary! Redirect to the main menu...")
     return 0
