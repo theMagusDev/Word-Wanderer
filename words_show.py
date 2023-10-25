@@ -16,7 +16,7 @@ def show_words():
             print(dictionaryList[j]["word"], dictionaryList[j]["meaning"])
         print("You've printed the last words, your dictionary is over!")
         return # printed first and actually last words
-    while user_input_in_show_mode.lower() != "/home":
+    while user_input_in_show_mode.lower() not in ["/home", "/exit"]:
         if i + user_settings["show_words_per_time"] < len(dictionaryList):
             print("Printing next words. Enter '/home' to exit this mode.")
             for j in range(i, i + user_settings["show_words_per_time"]):
@@ -30,3 +30,5 @@ def show_words():
                 print(dictionaryList[j]["word"], dictionaryList[j]["meaning"])
             print("You've printed the last words, your dictionary is over!")
             return # printed last words
+    if user_input_in_show_mode.lower() == '/exit':
+        exit()
