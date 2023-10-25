@@ -12,13 +12,15 @@ def check(word):
 def word_add_mode():
     user_data = get_user_data()
     print('At this point, you can make your own word list. \n'
-            'If you want to get back to the main menu, write "/home"')
+            'If you want to get back to the main menu, write "/home. If you want to exit the program, write "/exit"')
     while True:
-        print('Enter a new foreign word or "/home" to get back to the main menu:')
+        print('Enter a new foreign word or "/home" to get back to the main menu or /exit to exit the program:')
         word = input().strip()
         while check(word) == False:
             if word == '/home':
                 return
+            elif word == '/exit':
+                exit()
             print("Incorrect word or command entered, please enter again:")
             word = input().strip()
         print("Enter a translation of this word:")
@@ -27,6 +29,8 @@ def word_add_mode():
         while check(translation) == False:
             if translation == '/home':
                 return
+            elif translation == '/exit':
+                exit()
             print("Incorrect word entered, please enter the correct word:")
             translation = input().strip()
             
@@ -35,7 +39,9 @@ def word_add_mode():
         while command_to_save not in ['y', 'n']:
             if command_to_save == '/home':
                 return
-            print('Incorrect answer or command! Write "y" for yes or "n" for no and "/home" to get back to the main menu:')
+            elif command_to_save == '/exit':
+                exit()
+            print('Incorrect answer or command! Write "y" for yes or "n" for no and "/home" to get back to the main menu or /exit to exit the program:')
             command_to_save = input().strip().lower()
         if command_to_save == 'y':
             user_data["dictionary"].append({"word": word.lower(), "meaning": translation, "rating": 0})
