@@ -1,4 +1,4 @@
-from working_with_data import *
+from ProgramFiles.working_with_data import *
 
 
 def check_input_for_delete(string):  # проверка формата слова

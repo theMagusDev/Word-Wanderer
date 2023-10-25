@@ -1,5 +1,5 @@
-from working_with_data import get_user_data
-from working_with_data import get_settings
+from ProgramFiles.working_with_data import get_user_data
+from ProgramFiles.working_with_data import get_settings
 
 def show_words():
     dictionaryList = get_user_data()["dictionary"]

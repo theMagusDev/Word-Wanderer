@@ -1,5 +1,5 @@
-from working_with_data import get_user_data
-from working_with_data import set_user_data
+from ProgramFiles.working_with_data import get_user_data
+from ProgramFiles.working_with_data import set_user_data
 
 def check(word):
     if len(word) == 0:
@@ -37,11 +37,7 @@ def word_add_mode():
         print(f'You typed the word: "{word}" and its meaning "{translation}" right? If yes, write "y", if no, write "n"')
         command_to_save = input().strip().lower()
         while command_to_save not in ['y', 'n']:
-            if command_to_save == '/home':
-                return
-            elif command_to_save == '/exit':
-                exit()
-            print('Incorrect answer or command! Write "y" for yes or "n" for no and "/home" to get back to the main menu or /exit to exit the program:')
+            print('Incorrect answer or command! Write "y" for yes or "n" for no:')
             command_to_save = input().strip().lower()
         if command_to_save == 'y':
             user_data["dictionary"].append({"word": word.lower(), "meaning": translation, "rating": 0})

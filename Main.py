@@ -1,10 +1,10 @@
 import sys, os, shutil
-from word_add import *
-from test import *
-from settings import *
-from words_show import *
-from words_delete import *
-from working_with_data import get_user_data
+from ProgramFiles.word_add import *
+from ProgramFiles.test import *
+from ProgramFiles.settings import *
+from ProgramFiles.words_show import *
+from ProgramFiles.words_delete import *
+from ProgramFiles.working_with_data import get_user_data
 
 # создание папки с данными
 try: 
@@ -23,7 +23,6 @@ if not data_exists:
 if not settings_exists:
     shutil.copy2('defaults/settings.json', 'data')
 
-#
 def set_defaults():
     shutil.copy2('defaults/data.json', 'data')
     shutil.copy2('defaults/settings.json', 'data')
@@ -55,11 +54,11 @@ def print_main_menu_info():
 
 print("*** Language learning ***") 
 print_main_menu_info()
-user_input = input() 
+user_input = input().lower().strip() 
 while user_input != "/exit":
     while user_input not in "12345" and user_input != "/exit":
         print("Ошибка: введите корректную команду")
-        user_input = input()
+        user_input = input().lower().strip() 
     if user_input == "/exit":
         exit()
     elif user_input == "1":
@@ -75,5 +74,5 @@ while user_input != "/exit":
     else:
         sys.exit("Incorrect input exception")
     print_main_menu_info()
-    user_input = input()
+    user_input = input().lower().strip() 
     
