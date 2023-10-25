@@ -1,5 +1,6 @@
 from ProgramFiles.working_with_data import get_user_data
 from ProgramFiles.working_with_data import set_user_data
+from ProgramFiles.working_with_data import get_settings
 
 def check(word):
     if len(word) == 0:
@@ -10,17 +11,21 @@ def check(word):
     return True
         
 def word_add_mode():
+    user_settings = get_settings()
     user_data = get_user_data()
+    
+    if user_settings["dictionary_capacity"] <= len(user_data["dictionary"]):
+        print("Your dictionary is full. Increase its capacity in the settings or delete the words.")
+        return
+    
     print('At this point, you can make your own word list. \n'
-            'If you want to get back to the main menu, write "/home. If you want to exit the program, write "/exit"')
+            'If you want to get back to the main menu, write "/home.')
     while True:
-        print('Enter a new foreign word or "/home" to get back to the main menu or /exit to exit the program:')
+        print('Enter a new foreign word or "/home" to get back to the main menu:')
         word = input().strip()
         while check(word) == False:
             if word == '/home':
                 return
-            elif word == '/exit':
-                exit()
             print("Incorrect word or command entered, please enter again:")
             word = input().strip()
         print("Enter a translation of this word:")
@@ -29,8 +34,6 @@ def word_add_mode():
         while check(translation) == False:
             if translation == '/home':
                 return
-            elif translation == '/exit':
-                exit()
             print("Incorrect word entered, please enter the correct word:")
             translation = input().strip()
             

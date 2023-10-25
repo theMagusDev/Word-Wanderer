@@ -1,5 +1,6 @@
 from ProgramFiles.working_with_data import get_settings
 from ProgramFiles.working_with_data import save_settings
+from ProgramFiles.working_with_data import get_user_data
 
 def print_current_settings(current_settings):
     print("Your settings:")
@@ -10,24 +11,25 @@ def print_settings_commands():
     print("Enter '/edit' to edit some setting;")
     print("Enter '/setDefault' to reset your settings to default;")
     print("Enter '/home' to return to the main menu.")
-    print("Enter '/exit' to exit the app.")
-
 
 def settings_setup_mode():
     user_input_in_settings_mode = ""
     
-    while user_input_in_settings_mode != "/home" or user_input_in_settings_mode != "/exit":
+    while user_input_in_settings_mode != "/home":
         
         # получаем настройки пользователя
         user_settings = get_settings()
 
-        # выводим их и команды
+        # получаем актуальный размер словаря пользователя
+        user_dict_size = len(get_user_data()["dictionary"])
+
+        # выводим настройки и команды
         print_current_settings(user_settings)
         print_settings_commands()
 
         # пользователь вводит, что он хочет
         user_input_in_settings_mode = input().lower().strip() 
-        while user_input_in_settings_mode not in ["/edit", "/setDefault", "/home", "/exit"]:
+        while user_input_in_settings_mode not in ["/edit", "/setdefault", "/home"]:
             print("Incorrect input. Enter one of the command below:")
             print_settings_commands()
             user_input_in_settings_mode = input().lower().strip() 
@@ -36,7 +38,7 @@ def settings_setup_mode():
             # edit mode
             print("Enter the setting index (1 or 2) you want to edit or '/cancel' to cancel editing:")
             setting_number_to_change = input().lower().strip() 
-            while setting_number_to_change not in ["1", "2", "/cancel", "/home", "/exit"]:
+            while setting_number_to_change not in ["1", "2", "/cancel", "/home"]:
                 print("Incorrect setting index or command!")
                 print("Enter the setting index (1 or 2) you want to edit or '/cancel' to cancel editing:")
                 setting_number_to_change = input().lower().strip() 
@@ -47,8 +49,8 @@ def settings_setup_mode():
             elif setting_number_to_change == "1":
                 print("Enter a new dictionary capacity:")
                 new_dictionary_capacity = input().lower().strip() 
-                while new_dictionary_capacity.isdigit() == False and new_dictionary_capacity != "/home":
-                    print("Incorrect value for a new dictionary capacity. Enter a number.")
+                while new_dictionary_capacity.isdigit() == False and new_dictionary_capacity != "/home" or '-' in new_dictionary_capacity or int(new_dictionary_capacity) < user_dict_size:
+                    print("Incorrect value for a new dictionary capacity. Enter a positive number, not less than the number of words you have (" + str(user_dict_size) + ").")
                     print("Enter a new dictionary capacity:")
                     new_dictionary_capacity = input().lower().strip()
                 if new_dictionary_capacity == "/home":
@@ -83,10 +85,5 @@ def settings_setup_mode():
 
             # return to home
             return
-        elif user_input_in_settings_mode == '/exit':
-            exit()
         else:
             quit("Incorrect input exception")
-    
-    if user_input_in_settings_mode == '/exit':
-        exit()
