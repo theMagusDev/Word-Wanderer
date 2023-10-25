@@ -1,5 +1,5 @@
-from working_with_data import get_settings
-from working_with_data import save_settings
+from ProgramFiles.working_with_data import get_settings
+from ProgramFiles.working_with_data import save_settings
 
 def print_current_settings(current_settings):
     print("Your settings:")

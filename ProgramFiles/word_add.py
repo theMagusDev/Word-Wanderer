@@ -1,5 +1,5 @@
-from working_with_data import get_user_data
-from working_with_data import set_user_data
+from ProgramFiles.working_with_data import get_user_data
+from ProgramFiles.working_with_data import set_user_data
 
 def check(word):
     if len(word) == 0:

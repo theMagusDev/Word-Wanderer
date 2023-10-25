@@ -1,10 +1,10 @@
 import sys, os, shutil
-from word_add import *
-from test import *
-from settings import *
-from words_show import *
-from words_delete import *
-from working_with_data import get_user_data
+from ProgramFiles.word_add import *
+from ProgramFiles.test import *
+from ProgramFiles.settings import *
+from ProgramFiles.words_show import *
+from ProgramFiles.words_delete import *
+from ProgramFiles.working_with_data import get_user_data
 
 # создание папки с данными
 try: 
