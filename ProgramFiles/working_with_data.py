@@ -1,29 +1,4 @@
-import json, shutil, os, sys
-
-def initialize_data():
-    # создание папки с данными
-    try: 
-        parent_dir = os.path.dirname(os.path.abspath(__file__))
-        path = os.path.join(parent_dir, 'data')
-        os.mkdir(path)
-    except OSError:
-        pass
-
-    # инициализация дефолтных данных
-    data_exists = os.path.exists('data/data.json')
-    settings_exists = os.path.exists('data/settings.json')
-    if not data_exists:
-        shutil.copy2('defaults/data.json', 'data')
-
-    if not settings_exists:
-        shutil.copy2('defaults/settings.json', 'data')
-
-
-def set_defaults():
-    shutil.copy2('defaults/data.json', 'data')
-    shutil.copy2('defaults/settings.json', 'data')
-
-
+import json
 
 def get_user_data():
     try:
