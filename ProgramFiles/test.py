@@ -31,7 +31,7 @@ def help_mode():  # работа со списком команд
 def work_with_dic(tek_dic):  # работа со вводом
     cur_word = input(f"{tek_dic['meaning']} - ").strip()
     while not(check_input(cur_word)):
-        print("Invalid input format. Please enter English alphabet characters only.")
+        print("Invalid input format. Please enter English alphabet characters only. Or type '/help' to see available commands.")
         cur_word = input(f"{tek_dic['meaning']} - ").strip()
     while cur_word == '/help':
         cur_word = help_mode()
@@ -121,9 +121,9 @@ def test_mode():
     if len(dictionary) == 0:
         print("Oups! The dictionary is empty! Nothing to check! Add new words and let's get started! ")
         return 0
-    print("This is a test mode. You will be given a value in one language, "
-          "you need to type its translation into English. If you want to close test_mode "
-          "enter: /home")
+    print("This is a test mode. You will be given a value in one language,"
+          "you need to type its translation. \nIf you want to close test_mode "
+          "enter: /home. To see commands you can use, enter '/help'")
     pos_ans = ["You got it right!", "Well done!", "That's correct!", "Good job!", "Excellent!"]
     neg_ans = ["Don't worry! You'll learn it!", "That is not correct. Keep trying!", "Wrong! Remember this one!"
                "Don't give up! You'll memorize it!"]
