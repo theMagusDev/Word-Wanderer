@@ -24,41 +24,45 @@ def settings_setup_mode():
         print_settings_commands()
 
         # пользователь вводит, что он хочет
-        user_input_in_settings_mode = input()
-        while user_input_in_settings_mode not in ["/edit", "/setDefault", "/home"]:
+        user_input_in_settings_mode = input().lower().strip() 
+        while user_input_in_settings_mode not in ["/edit", "/setdefault", "/home"]:
             print("Incorrect input. Enter one of the command below:")
             print_settings_commands()
-            user_input_in_settings_mode = input()
+            user_input_in_settings_mode = input().lower().strip() 
         if user_input_in_settings_mode == "/edit":
 
             # edit mode
             print("Enter the setting index (1 or 2) you want to edit or '/cancel' to cancel editing:")
-            setting_number_to_change = input()
+            setting_number_to_change = input().lower().strip() 
             while setting_number_to_change not in ["1", "2", "/cancel", "/home"]:
                 print("Incorrect setting index or command!")
                 print("Enter the setting index (1 or 2) you want to edit or '/cancel' to cancel editing:")
-                setting_number_to_change = input()
+                setting_number_to_change = input().lower().strip() 
             
             if setting_number_to_change == "/cancel":
                 print("Changes were cancelled.")
                 continue
             elif setting_number_to_change == "1":
                 print("Enter a new dictionary capacity:")
-                new_dictionary_capacity = input()
-                while new_dictionary_capacity.isdigit() == False:
+                new_dictionary_capacity = input().lower().strip() 
+                while new_dictionary_capacity.isdigit() == False and new_dictionary_capacity != "/home":
                     print("Incorrect value for a new dictionary capacity. Enter a number.")
                     print("Enter a new dictionary capacity:")
-                    new_dictionary_capacity = input()
+                    new_dictionary_capacity = input().lower().strip()
+                if new_dictionary_capacity == "/home":
+                    return
                 user_settings["dictionary_capacity"] = int(new_dictionary_capacity)
                 save_settings(user_settings)
                 print("Saved your new settings. ")
             elif setting_number_to_change == "2":
                 print("Enter a new amount of words to show in learning mode per time:")
-                new_show_words_per_time = input()
-                while new_show_words_per_time.isdigit() == False:
+                new_show_words_per_time = input().lower().strip()
+                while new_show_words_per_time.isdigit() == False and new_show_words_per_time != "/home":
                     print("Incorrect value for an amount of words to show in learning mode per time. Enter a number.")
                     print("Enter a new amount of words to show in learning mode per time:")
-                    new_show_words_per_time = input()
+                    new_show_words_per_time = input().lower().strip()
+                if new_show_words_per_time == "/home":
+                    return
                 user_settings["show_words_per_time"] = int(new_show_words_per_time)
                 save_settings(user_settings)
                 print("Saved your new settings. ")
@@ -66,7 +70,7 @@ def settings_setup_mode():
                 quit("Incorrect input exception")
             
                 
-        elif user_input_in_settings_mode == "/setDefault":
+        elif user_input_in_settings_mode == "/setdefault":
 
             # set default settings mode
             user_settings["dictionary_capacity"] = 100000
